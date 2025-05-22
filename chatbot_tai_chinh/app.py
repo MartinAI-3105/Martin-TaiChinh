@@ -28,10 +28,7 @@ if uploaded_file and api_key:
                 model="gpt-4",
                 messages=[
                     {"role": "system", "content": "Bạn là một chuyên gia phân tích tài chính, hãy trả lời ngắn gọn và chính xác."},
-                    {"role": "user", "content": f"Báo cáo tài chính:
-{text}
-
-Câu hỏi: {question}"}
+                    {"role": "user", "content": f"""Báo cáo tài chính:\n{text}\n\nCâu hỏi: {question}"""}
                 ],
                 temperature=0.5
             )
