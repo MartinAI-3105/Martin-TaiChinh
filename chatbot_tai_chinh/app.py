@@ -23,13 +23,17 @@ if uploaded_file and api_key:
 
     if question:
         with st.spinner("Đang phân tích..."):
-            openai.api_key = api_key
-            response = openai.ChatCompletion.create(
-                model="gpt-4",
-                messages=[
-                    {"role": "system", "content": "Bạn là một chuyên gia phân tích tài chính, hãy trả lời ngắn gọn và chính xác."},
-                    {"role": "user", "content": f"""Báo cáo tài chính:\n{text}\n\nCâu hỏi: {question}"""}
-                ],
-                temperature=0.5
-            )
+            from openai import OpenAI
+client = OpenAI(api_key=api_key)
+
+response = client.chat.completions.create(
+    model="gpt-4",
+    messages=[
+        {"role": "system", "content": "Bạn là một chuyên gia phân tích tài chính..."},
+        {"role": "user", "content": f"""Báo cáo tài chính:\n{text}\n\nCâu hỏi: {question}"""}
+    ],
+    temperature=0.5
+)
+
+st.success(response.choices[0].message.content)
             st.success(response["choices"][0]["message"]["content"])
